@@ -2,7 +2,7 @@
 
 An end-to-end machine learning pipeline that predicts cost overrun risk for infrastructure projects **before construction begins** — using project type, procurement method, design readiness, and site-specific factors.
 
-**[→ Live Dashboard](https://sirilahari.github.io/construction-risk-predictor)**
+**[→ Live Dashboard](https://sirilahari10.github.io/construction-risk-predictor)**
 
 ---
 
