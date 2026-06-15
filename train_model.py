@@ -1,8 +1,4 @@
-"""
-train_model.py
-XGBoost pipeline to predict infrastructure project cost overruns.
-Outputs: model metrics, feature importances, predictions CSV for dashboard.
-"""
+
 
 import pandas as pd
 import numpy as np
@@ -15,7 +11,6 @@ from sklearn.metrics import (
 )
 from xgboost import XGBClassifier
 
-# ── Load data ──────────────────────────────────────────────────────────────────
 df = pd.read_csv("data/projects.csv")
 
 FEATURES = [
@@ -29,7 +24,6 @@ TARGET = "cost_overrun"
 X = df[FEATURES].copy()
 y = df[TARGET]
 
-# ── Encode categoricals ────────────────────────────────────────────────────────
 cat_cols = ["project_type", "region", "procurement_method", "complexity"]
 encoders = {}
 for col in cat_cols:
@@ -37,12 +31,10 @@ for col in cat_cols:
     X[col] = le.fit_transform(X[col])
     encoders[col] = le
 
-# ── Train / test split ─────────────────────────────────────────────────────────
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42, stratify=y
 )
 
-# ── Model ──────────────────────────────────────────────────────────────────────
 model = XGBClassifier(
     n_estimators=200,
     max_depth=5,
@@ -55,7 +47,6 @@ model = XGBClassifier(
 )
 model.fit(X_train, y_train)
 
-# ── Evaluation ────────────────────────────────────────────────────────────────
 y_pred = model.predict(X_test)
 y_prob = model.predict_proba(X_test)[:, 1]
 
@@ -69,12 +60,10 @@ print(f"  ROC-AUC  : {auc:.3f}")
 print("=" * 50)
 print(classification_report(y_test, y_pred, target_names=["No Overrun", "Overrun"]))
 
-# ── Cross-validation ──────────────────────────────────────────────────────────
 cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 cv_scores = cross_val_score(model, X, y, cv=cv, scoring="roc_auc")
 print(f"  5-Fold CV AUC: {cv_scores.mean():.3f} ± {cv_scores.std():.3f}")
 
-# ── Feature importances ───────────────────────────────────────────────────────
 importance_df = pd.DataFrame({
     "feature": FEATURES,
     "importance": model.feature_importances_
@@ -113,7 +102,6 @@ df["risk_tier"] = pd.cut(
 
 df.to_csv("data/predictions.csv", index=False)
 
-# Save metrics JSON for dashboard
 metrics = {
     "accuracy": round(acc, 4),
     "roc_auc": round(auc, 4),
