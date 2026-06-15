@@ -21,7 +21,6 @@ McKinsey estimates that **98% of megaprojects** experience cost overruns averagi
 ## Results
 
 | Metric | Score |
-|---|---|
 | Accuracy (test set) | 70.4% |
 | ROC-AUC | 0.655 |
 | 5-Fold CV AUC | 0.568 ± 0.046 |
@@ -53,23 +52,7 @@ Python 3.11
 └── Chart.js (frontend)     — interactive dashboard charts
 ```
 
-## Run It Yourself
 
-```bash
-git clone https://github.com/sirilahari/construction-risk-predictor
-cd construction-risk-predictor
-pip install -r requirements.txt
-
-python generate_data.py    # creates data/projects.csv
-python train_model.py      # trains model, outputs data/predictions.csv + metrics.json
-open index.html            # view dashboard locally
-```
-
-## Deploy Dashboard (GitHub Pages)
-
-1. Push repo to GitHub
-2. Go to **Settings → Pages → Source: main branch / root**
-3. Done — dashboard is live at `https://yourusername.github.io/construction-risk-predictor`
 
 ## Data
 
@@ -80,6 +63,4 @@ Synthetic dataset of 1,200 projects calibrated to patterns from:
 
 ## About
 
-Built by **Siri Lahari Chava** — Data Scientist & ML Engineer with a background in computer vision and applied ML.
-
-[LinkedIn](https://linkedin.com/in/sirilahari) · [GitHub](https://github.com/sirilahari)
+Built by **Siri Lahari Chava** — Data Scientist & ML Engineer.
